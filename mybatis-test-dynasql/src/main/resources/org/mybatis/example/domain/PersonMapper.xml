@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mybatis.example.domain.PersonMapper">
+    <select id="findPersonWithNameLike" resultType="Person">
+        select * from Person where age > 0
+        <if test="username != null and username != ''">
+            and username like #{username, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="findPersonLike" resultType="Person">
+        select * from person
+        where age > 0
+        <choose>
+            <when test="username != null">
+                and username like #{username}
+            </when>
+            <when test="password != null">
+                and password like #{password}
+            </when>
+            <otherwise>
+                and 1=1
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findPersonLike2" resultType="Person">
+        select * from person
+        <where>
+            <if test="age > 0">
+               age > 0
+            </if>
+            <if test="username != null">
+                 username like #{username}
+            </if>
+            <if test="password != null">
+                 password like #{password}
+            </if>
+        </where>
+    </select>
+
+    <select id="findPersonLike3" resultType="Person">
+        select * from person
+        <trim prefix=" where " prefixOverrides="and ">
+            <if test="age > 0">
+                age > 0
+            </if>
+            <if test="username != null">
+                and username like #{username}
+            </if>
+            <if test="password != null">
+                and password like #{password}
+            </if>
+        </trim>
+    </select>
+
+    <update id="updatePersonNece" >
+        update person
+        <set>
+            <if test="username != null">
+              username =#{username},
+            </if>
+            <if test="password">
+              password=#{password},
+            </if>
+            <if test="email != null">
+              email=#{email},
+            </if>
+            <if test="age > 0">
+              age=#{age},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <update id="updatePersonNece2">
+        update person
+        <trim prefix="set" suffixOverrides=",">
+          <if test="username != null">
+            username=#{username},
+          </if>
+          <if test="password != null">
+            password=#{password},
+          </if>
+          <if test="email != null">
+            email=#{email},
+          </if>
+          <if test="age > 0">
+            age=#{age}
+          </if>
+        </trim>
+        where
+          id=#{id}
+    </update>
+
+    <select id="selectListByIds" resultType="Person">
+        select * from person where id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and id not in
+        <foreach collection="list2" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectByBind"  resultType="Person">
+        <bind name="username" value="'%'+username+'%'"/>
+        select * from person where username like #{username}
+    </select>
+    
+</mapper>
