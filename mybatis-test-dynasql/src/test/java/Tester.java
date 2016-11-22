@@ -1,3 +1,4 @@
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -132,4 +133,40 @@ public class Tester
         }
         System.out.println(p);
     }
+
+    @Test
+    public void testPage(){
+        SqlSession session = sessionFactory.openSession();
+        Person p = new Person();
+
+        RowBounds row = new RowBounds(11, 10);
+        List<Object> objects = session.selectList(ns + "selectPage", p, row);
+        for (Object object : objects) {
+            System.out.println(object);
+        }
+    }
+
+    @Test
+    public void testPage2(){
+        SqlSession session = sessionFactory.openSession();
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        map.put("a", 1);
+        map.put("b", 30);
+        List<Object> objects = session.selectList(ns + "selectPage2", map);
+        for (Object object : objects) {
+            System.out.println(object);
+        }
+    }
+
+    @Test
+    public void test(){
+        SqlSession session = sessionFactory.openSession();
+        Person p = new Person();
+        p.setUsername("a");
+        List<Object> objects = session.selectList(ns + "selectTest", p);
+        for (Object object : objects) {
+            System.out.println(object);
+        }
+    }
+
 }

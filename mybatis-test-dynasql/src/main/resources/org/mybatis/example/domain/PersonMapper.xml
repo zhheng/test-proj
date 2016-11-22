@@ -106,9 +106,26 @@
         </foreach>
     </select>
 
+
+    <select id="selectPage" resultType="Person">
+        select * from person where 1=1
+    </select>
+
+    <select id="selectPage2" resultType="Person">
+        select * from person where 1=1 limit #{a},#{b}
+    </select>
+
+
+    <!--防止sql注入1-->
     <select id="selectByBind"  resultType="Person">
         <bind name="username" value="'%'+username+'%'"/>
         select * from person where username like #{username}
     </select>
-    
+
+    <!--防止sql注入2-->
+    <select id="selectTest" resultType="Person">
+        select * from person where 1=1 and username like CONCAT('%', #{username}, '%')
+    </select>
+
+
 </mapper>
