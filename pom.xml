@@ -14,6 +14,7 @@
         <module>springmvc-test-basic</module>
         <module>spring-test-basic</module>
         <module>mybatis-test-dynasql</module>
+        <module>mybatis-test-gene</module>
     </modules>
 
     <properties>
