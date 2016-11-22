@@ -12,6 +12,7 @@
         <module>mybatis-test-basic</module>
         <module>mybatis-test-crud</module>
         <module>springmvc-test-basic</module>
+        <module>spring-test-basic</module>
     </modules>
 
     <properties>
