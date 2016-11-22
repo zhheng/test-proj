@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--properties文件配置属性优先级高于此标签中配置的属性-->
+    <properties resource="org/mybatis/example/config.properties">
+        <property name="driver" value="com.mysql.jdbc.Driver"/>
+    </properties>
+
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+        <setting name="lazyLoadingEnabled" value="false"/>
+        <setting name="aggressiveLazyLoading" value="true"/>
+        <setting name="multipleResultSetsEnabled" value="true"/>
+        <setting name="useColumnLabel" value="true"/>
+        <setting name="useGeneratedKeys" value="false"/>
+        <setting name="autoMappingBehavior" value="PARTIAL"/><!--NONE, PARTIAL, FULL-->
+        <setting name="autoMappingUnknownColumnBehavior" value="NONE"/><!-- NONE, WARNING, FAILING -->
+        <setting name="defaultExecutorType" value="SIMPLE"/><!-- SIMPLE, REUSE, BATCH -->
+        <setting name="defaultStatementTimeout" value="25"/><!-- 正整数 -->
+        <setting name="defaultFetchSize" value="100"/><!-- 正整数 -->
+        <setting name="safeRowBoundsEnabled" value="false"/><!-- If allow, set the false -->
+        <setting name="safeResultHandlerEnabled" value="true"/><!-- If allow, set the false -->
+        <setting name="mapUnderscoreToCamelCase" value="false"/>
+        <setting name="localCacheScope" value="SESSION"/><!-- SESSION | STATEMENT -->
+        <setting name="jdbcTypeForNull" value="OTHER"/><!-- NULL, VARCHAR and OTHER -->
+        <setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString"/><!-- 用逗号分隔的方法名列表 -->
+        <setting name="defaultScriptingLanguage" value="org.apache.ibatis.scripting.xmltags.XMLDynamicLanguageDriver"/>
+        <setting name="callSettersOnNulls" value="false"/>
+        <setting name="logPrefix" value=""/>
+        <setting name="logImpl" value=""/>
+        <setting name="proxyFactory" value="JAVASSIST"/>
+        <setting name="vfsImpl" value=""/>
+        <setting name="useActualParamName" value="true"/>
+    </settings>
+
+    <typeAliases>
+        <typeAlias alias="Blog" type="org.mybatis.example.Blog"/>
+        <package name="org.mybatis.example"/>
+    </typeAliases>
+    <typeHandlers>
+        <typeHandler handler="org.mybatis.example.ExampleTypeHandler" javaType="String"/>
+    </typeHandlers>
+    
+    <objectFactory type="org.apache.ibatis.submitted.rounding.ExampleObjectFactory">
+        <property name="someProperty" value="100"/>
+    </objectFactory>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"></transactionManager><!-- [ JDBC | MANAGED ] -->
+            <dataSource type="POOLED"><!-- [ UNPOOLED | POOLED | JNDI ] -->
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${dev.url}"/>
+                <property name="username" value="${dev.username}"/>
+                <property name="password" value="${dev.password}"/>
+                <!--<property name="defaultTransactionIsolationLevel" value=""/>-->
+                <property name="driver.encoding" value="UTF8"/><!-- 传递属性给数据库驱动，可选项，前缀为“driver.” -->
+                <!-- POOLED的独有属性 -->
+                <!--在任意时间可以存在的活动（也就是正在使用）连接数量，默认值：10-->
+                <property name="poolMaximumActiveConnections" value="10"/>
+                <!--任意时间可能存在的空闲连接数-->
+                <property name="poolMaximumIdleConnections" value=""/>
+                <!--在被强制返回之前，池中连接被检出（checked out）时间，默认值：20000 毫秒（即 20 秒）-->
+                <property name="poolMaximumCheckoutTime" value="20000"/>
+                <!--这是一个底层设置，如果获取连接花费的相当长的时间，它会给连接池打印状态日志并重新尝试获取一个连接
+                （避免在误配置的情况下一直安静的失败），默认值：20000 毫秒（即 20 秒）-->
+                <property name="poolTimeToWait" value="20000"/>
+
+                <!--poolPingQuery、poolPingEnabled、poolPingConnectionsNotUsedFor三个属性组合使用，可以避免连接闲置超时短线问题
+                https://my.oschina.net/xpbug/blog/324978-->
+                <!--发送到数据库的侦测查询，用来检验连接是否处在正常工作秩序中并准备接受请求。默认是“NO PING QUERY SET”，
+                这会导致多数数据库驱动失败时带有一个恰当的错误消息-->
+                <property name="poolPingQuery" value="select now()"/>
+                <!--是否启用侦测查询。若开启，也必须使用一个可执行的 SQL 语句设置 poolPingQuery 属性（最好是一个非常快的 SQL），默认值：false-->
+                <property name="poolPingEnabled" value="false"/>
+                <!--配置 poolPingQuery 的使用频度。这可以被设置成匹配具体的数据库连接超时时间，来避免不必要的侦测，
+                默认值：0，单位毫秒（即所有连接每一时刻都被侦测 — 当然仅当 poolPingEnabled 为 true 时适用）-->
+                <property name="poolPingConnectionsNotUsedFor" value="0"/>
+            </dataSource>
+        </environment>
+        <environment id="production">
+            <transactionManager type="JNDI"></transactionManager>
+            <dataSource type="POOLED">
+                <property name="initial_context" value="${pro.initial_context}"/>
+                <property name="data_source" value="${pro.data_source}"/>
+                <!--可选属性，前缀“env.”-->
+                <property name="env.encoding" value="UTF8"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <databaseIdProvider type="DB_VENDOR">
+        <property name="SQL Server" value="sqlserver"/>
+        <property name="DB2" value="db2"/>
+        <property name="Oracle" value="oracle"/>
+        <property name="MySQL" value="mysql"/>
+    </databaseIdProvider>
+    <mappers>
+        <mapper resource=""/>
+        <mapper class=""/>
+        <mapper url=""/>
+        <package name=""/>
+    </mappers>
+
+</configuration>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mybatis.example.domain.PersonMapper">
+    <resultMap id="personResultMap" type="Person">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result column="email"/>
+        <result property="email" column="email"/>
+        <result property="age" column="age"/>
+    </resultMap>
+
+    <sql id="userColumns">username,password,email,age</sql>
+
+    <sql id="userValues">#{${var}username}, #{${var}password},#{${var}email}, #{${var}age}</sql>
+
+    <select id="selectPerson" parameterType="int" resultMap="personResultMap">
+        select * from person where id = #{id}
+    </select>
+    
+    <insert id="insertPerson" useGeneratedKeys="true" keyProperty="id">
+        insert into
+          person (<include refid="userColumns"></include>)
+        values
+          (<include refid="userValues"><property name="var" value=""/></include>)
+    </insert>
+
+    <insert id="insertPerson2">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+        </selectKey>
+        insert into
+          person (<include refid="userColumns"></include>)
+        value
+          (<include refid="userValues"></include>)
+    </insert>
+
+    <insert id="insertPersonList" useGeneratedKeys="true" keyProperty="id">
+        insert into
+          person (<include refid="userColumns"></include>)
+        values
+        <foreach collection="personList" item="p" separator=",">
+          (<include refid="userValues"><property name="var" value="p."/></include>)
+        </foreach>
+    </insert>
+
+    <update id="updatePeson">
+        update person set
+          username=#{username}, password=#{password}, email=#{email}, age=#{age}
+        where
+          id=#{id}
+    </update>
+
+    <delete id="deletePerson">
+        delete from person where id = #{id}
+    </delete>
+
+
+    <select id="selectPersonList" resultType="Person">
+        select <include refid="userColumns"/>
+        from person
+        where age > #{age}
+        order by ${columnName}
+    </select>
+
+</mapper>
