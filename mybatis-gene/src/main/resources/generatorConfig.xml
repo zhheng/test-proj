@@ -7,7 +7,7 @@
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/mybatis-test"
+                        connectionURL="jdbc:mysql://localhost:3306/mybatis"
                         userId="root"
                         password="mysql123">
         </jdbcConnection>
@@ -17,18 +17,18 @@
         </javaTypeResolver>
 
         <javaModelGenerator targetPackage="org.mybatis.example.domain"
-                 targetProject="D:\workspaces_idea\test-proj\mybatis-test-gene\src\main\java">
+                 targetProject="D:\workspaces_idea\test-proj\mybatis-gene\src\main\java">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
 
         <sqlMapGenerator targetPackage="org.mybatis.example.domain"
-                 targetProject="D:\workspaces_idea\test-proj\mybatis-test-gene\src\main\resources">
+                 targetProject="D:\workspaces_idea\test-proj\mybatis-gene\src\main\resources">
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="org.mybatis.example.dao"
-                 targetProject="D:\workspaces_idea\test-proj\mybatis-test-gene\src\main\java">
+                 targetProject="D:\workspaces_idea\test-proj\mybatis-gene\src\main\java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 

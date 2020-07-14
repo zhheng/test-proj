@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>spring-test-basic</artifactId>
+    <artifactId>spring-basic</artifactId>
 
     <dependencies>
         <dependency>

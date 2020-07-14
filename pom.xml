@@ -9,12 +9,12 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>mybatis-test-basic</module>
-        <module>mybatis-test-crud</module>
-        <module>springmvc-test-basic</module>
-        <module>spring-test-basic</module>
-        <module>mybatis-test-dynasql</module>
-        <module>mybatis-test-gene</module>
+        <module>mybatis-basic</module>
+        <module>mybatis-crud</module>
+        <module>springmvc-basic</module>
+        <module>spring-basic</module>
+        <module>mybatis-dynasql</module>
+<!--        <module>mybatis-gene</module>-->
     </modules>
 
     <properties>

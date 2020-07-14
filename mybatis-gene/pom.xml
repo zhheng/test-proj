@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mybatis-test-gene</artifactId>
+    <artifactId>mybatis-gene</artifactId>
 
     <properties>
         <dao.target.dir>src/main/java</dao.target.dir>
